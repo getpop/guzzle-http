@@ -7,6 +7,14 @@ use PoP\ComponentModel\Error;
 
 class GuzzleHelpers
 {
+    /**
+     * Execute a JSON request to the passed endpoint URL and form params
+     *
+     * @param string $url The Endpoint URL
+     * @param array $bodyJSONQuery The form params
+     * @param string $method
+     * @return mixed The payload if successful as an array, or an Error object containing the error message in case of failure
+     */
     public static function requestJSON(string $url, array $bodyJSONQuery = [], string $method = 'POST')
     {
         $client = new Client();
