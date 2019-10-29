@@ -2,6 +2,7 @@
 namespace PoP\GuzzleHelpers;
 use GuzzleHttp\Client;
 use GuzzleHttp\RequestOptions;
+use GuzzleHttp\Exception\RequestException;
 use PoP\ComponentModel\Error;
 
 class GuzzleHelpers
