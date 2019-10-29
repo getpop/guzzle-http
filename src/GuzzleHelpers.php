@@ -7,7 +7,7 @@ use PoP\ComponentModel\Error;
 
 class GuzzleHelpers
 {
-    public static function requestJSON(string $url, array $bodyJSONQuery = [], string $method = 'POST'): array
+    public static function requestJSON(string $url, array $bodyJSONQuery = [], string $method = 'POST')
     {
         $client = new Client();
         try {
