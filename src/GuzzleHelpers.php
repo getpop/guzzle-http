@@ -19,7 +19,7 @@ class GuzzleHelpers
      * @param string $method
      * @return mixed The payload if successful as an array, or an Error object containing the error message in case of failure
      */
-    public static function requestJSON(string $url, array $bodyJSONQuery = [], string $method = 'POST'): ?array
+    public static function requestJSON(string $url, array $bodyJSONQuery = [], string $method = 'POST')
     {
         $client = new Client();
         try {
@@ -37,7 +37,7 @@ class GuzzleHelpers
         return [];
     }
 
-    protected static function validateAndDecodeJSONResponse(ResponseInterface $response): ?array
+    protected static function validateAndDecodeJSONResponse(ResponseInterface $response)
     {
         $translationAPI = TranslationAPIFacade::getInstance();
         if ($response->getStatusCode() != 200) {
