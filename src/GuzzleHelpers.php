@@ -51,15 +51,25 @@ class GuzzleHelpers
                 )
             );
         }
-        $contentType = 'application/json';
-        if (substr($response->getHeaderLine('content-type'), 0, strlen($contentType)) != $contentType) {
+        $contentType = $response->getHeaderLine('content-type');
+        $acceptedContentTypes = [
+            'application/json',
+            'application/ld+json',
+        ];
+        $isAcceptedContentTypes = array_filter(
+            $acceptedContentTypes,
+            function($acceptedContentType) use($contentType) {
+                return substr($contentType, 0, strlen($acceptedContentType)) == $acceptedContentType;
+            }
+        );
+        if (empty($isAcceptedContentTypes)) {
             // Throw an error
             return new Error(
                 'request-failed',
                 sprintf(
-                    $translationAPI->__('The response content type is \'%s\' instead of the expected \'%s\'', 'guzzle-helpers'),
-                    $response->getHeaderLine('content-type'),
-                    $contentType
+                    $translationAPI->__('The response content type is \'%s\' instead of any of the expected types \'%s\'', 'guzzle-helpers'),
+                    $contentType,
+                    implode($translationAPI->__('\', \''), $acceptedContentTypes)
                 )
             );
         }
@@ -82,21 +92,41 @@ class GuzzleHelpers
      * @param string $method
      * @return mixed The payload if successful as an array, or an Error object containing the error message in case of failure
      */
-    public static function requestAsyncJSON(string $url, array $bodyJSONQueries = [], string $method = 'POST')
+    public static function requestSingleURLMultipleQueriesAsyncJSON(string $url, array $bodyJSONQueries = [], string $method = 'POST')
     {
-        $client = new Client();
+        $urls = [];
+        for ($i=0; $i<count($bodyJSONQueries); $i++) {
+            $urls[] = $url;
+        }
+        return self::requestAsyncJSON($urls, $bodyJSONQueries, $method);
+    }
 
+    /**
+     * Execute several JSON requests asynchronously
+     *
+     * @param array $urls The endpoints to fetch
+     * @param array $bodyJSONQueries the bodyJSONQuery to attach to each URL, on the same order provided in param $urls
+     * @param string $method
+     * @return void
+     */
+    public static function requestAsyncJSON(array $urls, array $bodyJSONQueries = [], string $method = 'POST')
+    {
+        if (!$urls) {
+            return [];
+        }
+
+        $client = new Client();
         try {
-            // Initiate each request but do not block
-            $promises = array_map(
-                function($bodyJSONQuery) use($method, $url, $client) {
-                    $options = [
-                        RequestOptions::JSON => $bodyJSONQuery,
-                    ];
-                    return $client->requestAsync($method, $url, $options);
-                },
-                $bodyJSONQueries
-            );
+            // Build the list of promises from the URLs and the body JSON queries
+            $promises = [];
+            foreach ($urls as $key => $url) {
+                // If there is a body JSON query, attach it to the request
+                $options = [];
+                if ($bodyJSONQuery = $bodyJSONQueries[$key]) {
+                    $options[RequestOptions::JSON] = $bodyJSONQuery;
+                }
+                $promises[$key] = $client->requestAsync($method, $url, $options);
+            }
 
             // Wait on all of the requests to complete. Throws a ConnectException
             // if any of the requests fail
