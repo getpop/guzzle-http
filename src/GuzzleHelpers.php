@@ -51,7 +51,7 @@ class GuzzleHelpers
                 )
             );
         }
-        $contentType = $response->getHeaderLine('content-type');
+        $contentType = $response->getHeaderLine('contentType');
         $acceptedContentTypes = [
             'application/json',
             'application/ld+json',
