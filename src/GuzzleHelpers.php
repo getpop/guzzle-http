@@ -143,10 +143,12 @@ class GuzzleHelpers
                 $results
             );
         } catch (RequestException $exception) {
-            return new Error(
-                'request-failed',
-                $exception->getMessage()
-            );
+            return [
+                new Error(
+                    'request-failed',
+                    $exception->getMessage()
+                )
+            ];
         }
         return [];
     }
