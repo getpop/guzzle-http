@@ -84,7 +84,7 @@ class GuzzleHelpers
                 $translationAPI->__('The body of the response is empty', 'guzzle-helpers')
             );
         }
-        return json_decode($body, JSON_FORCE_OBJECT);
+        return json_decode($body->__toString(), true);
     }
 
     /**
