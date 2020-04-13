@@ -58,7 +58,7 @@ class GuzzleHelpers
         ];
         $isAcceptedContentTypes = array_filter(
             $acceptedContentTypes,
-            function($acceptedContentType) use($contentType) {
+            function ($acceptedContentType) use ($contentType) {
                 return substr($contentType, 0, strlen($acceptedContentType)) == $acceptedContentType;
             }
         );
@@ -95,7 +95,7 @@ class GuzzleHelpers
     public static function requestSingleURLMultipleQueriesAsyncJSON(string $url, array $bodyJSONQueries = [], string $method = 'POST')
     {
         $urls = [];
-        for ($i=0; $i<count($bodyJSONQueries); $i++) {
+        for ($i = 0; $i < count($bodyJSONQueries); $i++) {
             $urls[] = $url;
         }
         return self::requestAsyncJSON($urls, $bodyJSONQueries, $method);
@@ -137,7 +137,7 @@ class GuzzleHelpers
 
             // You can access each result using the key provided to the unwrap function.
             return array_map(
-                function($result) {
+                function ($result) {
                     return self::validateAndDecodeJSONResponse($result['value']);
                 },
                 $results
