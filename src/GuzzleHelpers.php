@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace PoP\GuzzleHelpers;
+
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
 use PoP\ComponentModel\Error;
@@ -20,7 +21,7 @@ class GuzzleHelpers
      * @param string $url The Endpoint URL
      * @param array $bodyJSONQuery The form params
      * @param string $method
-     * @return mixed The payload if successful as an array, or an Error object containing the error message in case of failure
+     * @return array|Error The payload if successful as an array, or an Error object containing the error message in case of failure
      */
     public static function requestJSON(string $url, array $bodyJSONQuery = [], string $method = 'POST')
     {
