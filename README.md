@@ -22,6 +22,14 @@ composer require getpop/guzzle-helpers
 
 ## Usage
 
+Initialize the component:
+
+``` php
+\PoP\GuzzleHelpers\Component::initialize();
+```
+
+Use it:
+
 ```php
 $response = \PoP\GuzzleHelpers\GuzzleHelpers::requestJSON($url, $bodyJSONQuery);
 ```
