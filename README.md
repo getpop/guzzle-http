@@ -25,7 +25,9 @@ composer require getpop/guzzle-helpers
 Initialize the component:
 
 ``` php
-\PoP\GuzzleHelpers\Component::initialize();
+\PoP\Root\ComponentLoader::initializeComponents([
+    \PoP\GuzzleHelpers\Component::class,
+]);
 ```
 
 Use it:
