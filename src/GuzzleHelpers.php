@@ -59,6 +59,7 @@ class GuzzleHelpers
         $acceptedContentTypes = [
             'application/json',
             'application/ld+json',
+            'application/geo+json',
         ];
         $isAcceptedContentTypes = array_filter(
             $acceptedContentTypes,
