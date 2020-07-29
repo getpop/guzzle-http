@@ -56,25 +56,23 @@ class GuzzleHelpers
             );
         }
         $contentType = $response->getHeaderLine('content-type');
-        $acceptedContentTypes = [
-            'application/json',
-            'application/ld+json',
-            'application/geo+json',
-        ];
-        $isAcceptedContentTypes = array_filter(
-            $acceptedContentTypes,
-            function ($acceptedContentType) use ($contentType) {
-                return substr($contentType, 0, strlen($acceptedContentType)) == $acceptedContentType;
-            }
-        );
-        if (empty($isAcceptedContentTypes)) {
+        // It must be a JSON content type, for which it's either
+        // application/json or one of its opinionated variants,
+        // which all contain +json, such as
+        // application/ld+json or application/geo+json
+        $isJSONContentType =
+            substr($contentType, 0, strlen('application/json')) == 'application/json'
+            || (
+                substr($contentType, 0, strlen('application/')) == 'application/'
+                && strpos($contentType, '+json') !== false
+            );
+        if (!$isJSONContentType) {
             // Throw an error
             return new Error(
                 'request-failed',
                 sprintf(
-                    $translationAPI->__('The response content type is \'%s\' instead of any of the expected types \'%s\'', 'guzzle-helpers'),
-                    $contentType,
-                    implode($translationAPI->__('\', \''), $acceptedContentTypes)
+                    $translationAPI->__('The response content type \'%s\' is unsupported', 'guzzle-helpers'),
+                    $contentType
                 )
             );
         }
