@@ -6,7 +6,7 @@ namespace PoP\GuzzleHelpers;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise;
-use PoP\ComponentModel\Error;
+use PoP\ComponentModel\ErrorHandling\Error;
 use GuzzleHttp\RequestOptions;
 
 use Psr\Http\Message\ResponseInterface;
