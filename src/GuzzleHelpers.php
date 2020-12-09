@@ -125,7 +125,7 @@ class GuzzleHelpers
             foreach ($urls as $key => $url) {
                 // If there is a body JSON query, attach it to the request
                 $options = [];
-                if ($bodyJSONQuery = $bodyJSONQueries[$key]) {
+                if ($bodyJSONQuery = $bodyJSONQueries[$key] ?? null) {
                     $options[RequestOptions::JSON] = $bodyJSONQuery;
                 }
                 $promises[$key] = $client->requestAsync($method, $url, $options);
