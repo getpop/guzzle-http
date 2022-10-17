@@ -1,5 +1,5 @@
 {
-    "name": "getpop/guzzle-helpers",
+    "name": "getpop-pro/guzzle-helpers",
     "conflict": {
         "getpop/componentrouting": "<0.8.9",
         "getpop/loosecontracts": "<0.8.9",
@@ -148,7 +148,7 @@
     "type": "library",
     "description": "Helper functions for Guzzle",
     "keywords": ["GraphQL", "PHP", "PoP", "guzzle-helpers"],
-    "homepage": "https://github.com/getpop/guzzle-helpers",
+    "homepage": "https://github.com/getpop-pro/guzzle-helpers",
     "license": "GPL-2.0-or-later",
     "authors": [
         {

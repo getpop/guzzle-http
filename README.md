@@ -16,12 +16,12 @@ Helper functions for Guzzle
 Via Composer
 
 ``` bash
-composer require getpop/guzzle-helpers
+composer require getpop-pro/guzzle-helpers
 ```
 
 ## Development
 
-The source code is hosted on the [PoP monorepo](https://github.com/leoloso/PoP), under [`Engine/packages/guzzle-helpers`](https://github.com/leoloso/PoP/tree/master/layers/Engine/packages/guzzle-helpers).
+The source code is hosted on the [PRO monorepo for PoP](https://github.com/leoloso/PRO), under [`Engine/packages/guzzle-helpers`](https://github.com/leoloso/PRO/tree/master/layers/Engine/packages/guzzle-helpers).
 
 ## Usage
 
@@ -117,17 +117,17 @@ If you discover any security related issues, please email leo@getpop.org instead
 
 GNU General Public License v2 (or later). Please see [License File](LICENSE.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/getpop/guzzle-helpers.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/getpop-pro/guzzle-helpers.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-GPLv2-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/getpop/guzzle-helpers/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/getpop/guzzle-helpers.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/getpop/guzzle-helpers.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/getpop/guzzle-helpers.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/getpop-pro/guzzle-helpers/master.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/getpop-pro/guzzle-helpers.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/getpop-pro/guzzle-helpers.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/getpop-pro/guzzle-helpers.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/getpop/guzzle-helpers
-[link-travis]: https://travis-ci.org/getpop/guzzle-helpers
-[link-scrutinizer]: https://scrutinizer-ci.com/g/getpop/guzzle-helpers/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/getpop/guzzle-helpers
-[link-downloads]: https://packagist.org/packages/getpop/guzzle-helpers
+[link-packagist]: https://packagist.org/packages/getpop-pro/guzzle-helpers
+[link-travis]: https://travis-ci.org/getpop-pro/guzzle-helpers
+[link-scrutinizer]: https://scrutinizer-ci.com/g/getpop-pro/guzzle-helpers/code-structure
+[link-code-quality]: https://scrutinizer-ci.com/g/getpop-pro/guzzle-helpers
+[link-downloads]: https://packagist.org/packages/getpop-pro/guzzle-helpers
 [link-author]: https://github.com/leoloso
 [link-contributors]: ../../../../../../contributors
