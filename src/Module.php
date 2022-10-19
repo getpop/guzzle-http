@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PoP\GuzzleHelpers;
+namespace PoP\GuzzleHTTP;
 
 use PoP\Root\Module\ModuleInterface;
 use PoP\Root\Module\AbstractModule;

@@ -1,5 +1,5 @@
 {
-    "name": "getpop-pro/guzzle-helpers",
+    "name": "getpop-pro/guzzle-http",
     "conflict": {
         "getpop/componentrouting": "<0.8.9",
         "getpop/loosecontracts": "<0.8.9",
@@ -146,9 +146,9 @@
         "pop-wp-schema/schema-commons": "<0.8.9"
     },
     "type": "library",
-    "description": "Helper functions for Guzzle",
-    "keywords": ["GraphQL", "PHP", "PoP", "guzzle-helpers"],
-    "homepage": "https://github.com/getpop-pro/guzzle-helpers",
+    "description": "Provide (scoped) access to Guzzle HTTP",
+    "keywords": ["GraphQL", "PHP", "PoP", "guzzle-http"],
+    "homepage": "https://github.com/getpop/guzzle-http",
     "license": "GPL-2.0-or-later",
     "authors": [
         {
@@ -170,12 +170,12 @@
     },
     "autoload": {
         "psr-4": {
-            "PoP\\GuzzleHelpers\\": "src"
+            "PoP\\GuzzleHTTP\\": "src"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "PoP\\GuzzleHelpers\\": "tests"
+            "PoP\\GuzzleHTTP\\": "tests"
         }
     },
     "scripts": {

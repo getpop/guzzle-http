@@ -1,4 +1,4 @@
-# GuzzleHelpers
+# Guzzle HTTP
 
 <!--
 [![Build Status][ico-travis]][link-travis]
@@ -9,19 +9,19 @@
 [![Total Downloads][ico-downloads]][link-downloads]
 -->
 
-Helper functions for Guzzle
+Provide (scoped) access to Guzzle HTTP
 
 ## Install
 
 Via Composer
 
 ``` bash
-composer require getpop-pro/guzzle-helpers
+composer require getpop-pro/guzzle-http
 ```
 
 ## Development
 
-The source code is hosted on the [PRO monorepo for PoP](https://github.com/leoloso/PRO), under [`Engine/packages/guzzle-helpers`](https://github.com/leoloso/PRO/tree/master/layers/Engine/packages/guzzle-helpers).
+The source code is hosted on the [PRO monorepo for PoP](https://github.com/leoloso/PRO), under [`Engine/packages/guzzle-http`](https://github.com/leoloso/PRO/tree/master/layers/Engine/packages/guzzle-http).
 
 ## Usage
 
@@ -29,7 +29,7 @@ Initialize the component:
 
 ``` php
 \PoP\Root\App::stockAndInitializeModuleClasses([([
-    \PoP\GuzzleHelpers\Module::class,
+    \PoP\GuzzleHTTP\Module::class,
 ]);
 ```
 
@@ -117,17 +117,17 @@ If you discover any security related issues, please email leo@getpop.org instead
 
 GNU General Public License v2 (or later). Please see [License File](LICENSE.md) for more information.
 
-[ico-version]: https://img.shields.io/packagist/v/getpop-pro/guzzle-helpers.svg?style=flat-square
+[ico-version]: https://img.shields.io/packagist/v/getpop-pro/guzzle-http.svg?style=flat-square
 [ico-license]: https://img.shields.io/badge/license-GPLv2-brightgreen.svg?style=flat-square
-[ico-travis]: https://img.shields.io/travis/getpop-pro/guzzle-helpers/master.svg?style=flat-square
-[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/getpop-pro/guzzle-helpers.svg?style=flat-square
-[ico-code-quality]: https://img.shields.io/scrutinizer/g/getpop-pro/guzzle-helpers.svg?style=flat-square
-[ico-downloads]: https://img.shields.io/packagist/dt/getpop-pro/guzzle-helpers.svg?style=flat-square
+[ico-travis]: https://img.shields.io/travis/getpop-pro/guzzle-http/master.svg?style=flat-square
+[ico-scrutinizer]: https://img.shields.io/scrutinizer/coverage/g/getpop-pro/guzzle-http.svg?style=flat-square
+[ico-code-quality]: https://img.shields.io/scrutinizer/g/getpop-pro/guzzle-http.svg?style=flat-square
+[ico-downloads]: https://img.shields.io/packagist/dt/getpop-pro/guzzle-http.svg?style=flat-square
 
-[link-packagist]: https://packagist.org/packages/getpop-pro/guzzle-helpers
-[link-travis]: https://travis-ci.org/getpop-pro/guzzle-helpers
-[link-scrutinizer]: https://scrutinizer-ci.com/g/getpop-pro/guzzle-helpers/code-structure
-[link-code-quality]: https://scrutinizer-ci.com/g/getpop-pro/guzzle-helpers
-[link-downloads]: https://packagist.org/packages/getpop-pro/guzzle-helpers
+[link-packagist]: https://packagist.org/packages/getpop-pro/guzzle-http
+[link-travis]: https://travis-ci.org/getpop-pro/guzzle-http
+[link-scrutinizer]: https://scrutinizer-ci.com/g/getpop-pro/guzzle-http/code-structure
+[link-code-quality]: https://scrutinizer-ci.com/g/getpop-pro/guzzle-http
+[link-downloads]: https://packagist.org/packages/getpop-pro/guzzle-http
 [link-author]: https://github.com/leoloso
 [link-contributors]: ../../../../../../contributors

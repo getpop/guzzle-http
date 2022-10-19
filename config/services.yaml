@@ -4,5 +4,5 @@ services:
         autowire: true
         autoconfigure: true
 
-    PoP\GuzzleHelpers\Services\GuzzleServiceInterface:
-        class: \PoP\GuzzleHelpers\Services\GuzzleService
+    PoP\GuzzleHTTP\Services\GuzzleServiceInterface:
+        class: \PoP\GuzzleHTTP\Services\GuzzleService

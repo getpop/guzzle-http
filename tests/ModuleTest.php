@@ -1,6 +1,6 @@
 <?php
 
-namespace PoP\GuzzleHelpers;
+namespace PoP\GuzzleHTTP;
 
 use PoP\Root\AbstractModuleTest;
 

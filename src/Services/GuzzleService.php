@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace PoP\GuzzleHelpers\Services;
+namespace PoP\GuzzleHTTP\Services;
 
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise\Utils;
 use GuzzleHttp\RequestOptions;
-use PoP\GuzzleHelpers\Exception\GuzzleInvalidResponseException;
-use PoP\GuzzleHelpers\Exception\GuzzleRequestException;
+use PoP\GuzzleHTTP\Exception\GuzzleInvalidResponseException;
+use PoP\GuzzleHTTP\Exception\GuzzleRequestException;
 use PoP\Root\Facades\Translation\TranslationAPIFacade;
 use Psr\Http\Message\ResponseInterface;
 
@@ -72,7 +72,7 @@ class GuzzleService implements GuzzleServiceInterface
         if ($response->getStatusCode() !== 200) {
             throw new GuzzleInvalidResponseException(
                 sprintf(
-                    $translationAPI->__('The response status code is \'%s\' instead of the expected \'%s\'', 'guzzle-helpers'),
+                    $translationAPI->__('The response status code is \'%s\' instead of the expected \'%s\'', 'guzzle-http'),
                     $response->getStatusCode(),
                     200
                 )
@@ -92,7 +92,7 @@ class GuzzleService implements GuzzleServiceInterface
         if (!$isJSONContentType) {
             throw new GuzzleInvalidResponseException(
                 sprintf(
-                    $translationAPI->__('The response content type \'%s\' is unsupported', 'guzzle-helpers'),
+                    $translationAPI->__('The response content type \'%s\' is unsupported', 'guzzle-http'),
                     $contentType
                 )
             );
@@ -100,7 +100,7 @@ class GuzzleService implements GuzzleServiceInterface
         $bodyResponse = $response->getBody()->__toString();
         if (!$bodyResponse) {
             throw new GuzzleInvalidResponseException(
-                $translationAPI->__('The body of the response is empty', 'guzzle-helpers')
+                $translationAPI->__('The body of the response is empty', 'guzzle-http')
             );
         }
         return json_decode($bodyResponse, true);

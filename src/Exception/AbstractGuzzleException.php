@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace PoP\GuzzleHelpers\Exception;
+namespace PoP\GuzzleHTTP\Exception;
 
 use PoP\Root\Exception\AbstractSystemException;
 

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace PoP\GuzzleHelpers\Services;
+namespace PoP\GuzzleHTTP\Services;
 
 use GuzzleHttp\Client;
-use PoP\GuzzleHelpers\Exception\GuzzleInvalidResponseException;
-use PoP\GuzzleHelpers\Exception\GuzzleRequestException;
+use PoP\GuzzleHTTP\Exception\GuzzleInvalidResponseException;
+use PoP\GuzzleHTTP\Exception\GuzzleRequestException;
 
 interface GuzzleServiceInterface
 {
