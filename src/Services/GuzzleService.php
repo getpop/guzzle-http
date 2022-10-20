@@ -7,9 +7,9 @@ namespace PoP\GuzzleHTTP\Services;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise\Utils;
-use GuzzleHttp\RequestOptions;
 use PoP\GuzzleHTTP\Exception\GuzzleInvalidResponseException;
 use PoP\GuzzleHTTP\Exception\GuzzleRequestException;
+use PoP\GuzzleHTTP\ObjectModels\RequestInput;
 use PoP\Root\Facades\Translation\TranslationAPIFacade;
 use Psr\Http\Message\ResponseInterface;
 
@@ -23,22 +23,18 @@ class GuzzleService implements GuzzleServiceInterface
     }
 
     /**
-     * Execute a JSON request to the passed endpoint URL and form params
+     * Execute an HTTP request to the passed endpoint URL and form params
      *
-     * @param string $url The Endpoint URL
-     * @param array<string,mixed> $bodyJSONQuery The form params
      * @return array<string,mixed> The payload if successful as an array
+     *
      * @throws GuzzleRequestException
      * @throws GuzzleInvalidResponseException
      */
-    public function requestJSON(string $url, array $bodyJSONQuery = [], string $method = 'POST'): array
+    public function sendHTTPRequest(RequestInput $requestInput): array
     {
         $client = $this->getClient();
-        $options = [
-            RequestOptions::JSON => $bodyJSONQuery,
-        ];
         try {
-            $response = $client->request($method, $url, $options);
+            $response = $client->request($requestInput->method, $requestInput->url, $requestInput->options);
         } catch (Exception $exception) {
             throw new GuzzleRequestException(
                 $exception->getMessage(),
@@ -46,7 +42,7 @@ class GuzzleService implements GuzzleServiceInterface
                 $exception
             );
         }
-        return self::validateAndDecodeJSONResponse($response);
+        return $this->validateAndDecodeJSONResponse($response);
     }
 
     protected function getClient(): Client
@@ -107,51 +103,25 @@ class GuzzleService implements GuzzleServiceInterface
     }
 
     /**
-     * Execute several JSON requests asynchronously using the same endpoint URL and different queries
-     *
-     * @param string $url The Endpoint URL
-     * @param array<int|string,array<string,mixed>> $bodyJSONQueries The form params
-     * @return array<string,mixed> The payload if successful
-     * @throws GuzzleInvalidResponseException
-     */
-    public function requestSingleURLMultipleQueriesAsyncJSON(string $url, array $bodyJSONQueries = [], string $method = 'POST'): array
-    {
-        $urls = [];
-        $methods = [];
-        for ($i = 0; $i < count($bodyJSONQueries); $i++) {
-            $urls[] = $url;
-            $methods[] = $method;
-        }
-        return self::requestAsyncJSON($urls, $bodyJSONQueries, $methods);
-    }
-
-    /**
      * Execute several JSON requests asynchronously
      *
-     * @param string[] $urls The endpoints to fetch
-     * @param array<int|string,array<string,mixed>> $bodyJSONQueries the bodyJSONQuery to attach to each URL, on the same order provided in param $urls
-     * @param string[] $methods
+     * @param RequestInput[] $requestInputs
      * @return array<string,mixed> The payload if successful
+     *
      * @throws GuzzleInvalidResponseException
      */
-    public function requestAsyncJSON(array $urls, array $bodyJSONQueries = [], array $methods = []): array
+    public function sendAsyncHTTPRequest(array $requestInputs): array
     {
-        if (!$urls) {
-            return [];
-        }
-
         $client = $this->getClient();
         try {
             // Build the list of promises from the URLs and the body JSON queries
             $promises = [];
-            foreach ($urls as $key => $url) {
-                // If there is a body JSON query, attach it to the request
-                $options = [];
-                if ($bodyJSONQuery = $bodyJSONQueries[$key] ?? null) {
-                    $options[RequestOptions::JSON] = $bodyJSONQuery;
-                }
-                $method = $methods[$key] ?? 'POST';
-                $promises[$key] = $client->requestAsync($method, $url, $options);
+            foreach ($requestInputs as $requestInput) {
+                $promises[] = $client->requestAsync(
+                    $requestInput->method,
+                    $requestInput->url,
+                    $requestInput->options,
+                );
             }
 
             // Wait on all of the requests to complete. Throws a ConnectException
@@ -170,9 +140,7 @@ class GuzzleService implements GuzzleServiceInterface
 
         // You can access each result using the key provided to the unwrap function.
         return array_map(
-            function (array $result): array {
-                return self::validateAndDecodeJSONResponse($result['value']);
-            },
+            fn (array $result) => $this->validateAndDecodeJSONResponse($result['value']),
             $results
         );
     }
