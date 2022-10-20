@@ -38,8 +38,9 @@ interface GuzzleServiceInterface
      *
      * @param string[] $urls The endpoints to fetch
      * @param array<int|string,array<string,mixed>> $bodyJSONQueries the bodyJSONQuery to attach to each URL, on the same order provided in param $urls
+     * @param string[] $methods
      * @return array<string,mixed> The payload if successful
      * @throws GuzzleInvalidResponseException
      */
-    public function requestAsyncJSON(array $urls, array $bodyJSONQueries = [], string $method = 'POST'): array;
+    public function requestAsyncJSON(array $urls, array $bodyJSONQueries = [], array $methods = []): array;
 }

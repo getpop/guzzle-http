@@ -117,10 +117,12 @@ class GuzzleService implements GuzzleServiceInterface
     public function requestSingleURLMultipleQueriesAsyncJSON(string $url, array $bodyJSONQueries = [], string $method = 'POST'): array
     {
         $urls = [];
+        $methods = [];
         for ($i = 0; $i < count($bodyJSONQueries); $i++) {
             $urls[] = $url;
+            $methods[] = $method;
         }
-        return self::requestAsyncJSON($urls, $bodyJSONQueries, $method);
+        return self::requestAsyncJSON($urls, $bodyJSONQueries, $methods);
     }
 
     /**
@@ -128,10 +130,11 @@ class GuzzleService implements GuzzleServiceInterface
      *
      * @param string[] $urls The endpoints to fetch
      * @param array<int|string,array<string,mixed>> $bodyJSONQueries the bodyJSONQuery to attach to each URL, on the same order provided in param $urls
+     * @param string[] $methods
      * @return array<string,mixed> The payload if successful
      * @throws GuzzleInvalidResponseException
      */
-    public function requestAsyncJSON(array $urls, array $bodyJSONQueries = [], string $method = 'POST'): array
+    public function requestAsyncJSON(array $urls, array $bodyJSONQueries = [], array $methods = []): array
     {
         if (!$urls) {
             return [];
@@ -147,6 +150,7 @@ class GuzzleService implements GuzzleServiceInterface
                 if ($bodyJSONQuery = $bodyJSONQueries[$key] ?? null) {
                     $options[RequestOptions::JSON] = $bodyJSONQuery;
                 }
+                $method = $methods[$key] ?? 'POST';
                 $promises[$key] = $client->requestAsync($method, $url, $options);
             }
 
