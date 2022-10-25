@@ -6,6 +6,6 @@ namespace PoP\GuzzleHTTP\Exception;
 
 use PoP\Root\Exception\AbstractSystemException;
 
-abstract class AbstractGuzzleException extends AbstractSystemException
+abstract class AbstractGuzzleHTTPException extends AbstractSystemException
 {
 }

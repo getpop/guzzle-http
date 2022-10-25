@@ -7,11 +7,10 @@ namespace PoP\GuzzleHTTP\Services;
 use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Promise\Utils;
-use PoP\GuzzleHTTP\Exception\GuzzleInvalidResponseException;
-use PoP\GuzzleHTTP\Exception\GuzzleRequestException;
+use PoP\GuzzleHTTP\Exception\GuzzleHTTPRequestException;
 use PoP\GuzzleHTTP\ObjectModels\RequestInput;
-use PoP\Root\Facades\Translation\TranslationAPIFacade;
-use Psr\Http\Message\ResponseInterface;
+use PoP\GuzzleHTTP\UpstreamWrappers\Http\Message\ResponseInterface;
+use PoP\GuzzleHTTP\UpstreamWrappers\Http\Message\ResponseWrapper;
 
 class GuzzleService implements GuzzleServiceInterface
 {
@@ -25,24 +24,17 @@ class GuzzleService implements GuzzleServiceInterface
     /**
      * Execute an HTTP request to the passed endpoint URL and form params
      *
-     * @return array<string,mixed> The payload if successful as an array
-     *
-     * @throws GuzzleRequestException
-     * @throws GuzzleInvalidResponseException
+     * @throws GuzzleHTTPRequestException
      */
-    public function sendHTTPRequest(RequestInput $requestInput): array
+    public function sendHTTPRequest(RequestInput $requestInput): ResponseInterface
     {
         $client = $this->getClient();
         try {
             $response = $client->request($requestInput->method, $requestInput->url, $requestInput->options);
         } catch (Exception $exception) {
-            throw new GuzzleRequestException(
-                $exception->getMessage(),
-                0,
-                $exception
-            );
+            $this->throwException($exception);
         }
-        return $this->validateAndDecodeJSONResponse($response);
+        return new ResponseWrapper($response);
     }
 
     protected function getClient(): Client
@@ -59,56 +51,12 @@ class GuzzleService implements GuzzleServiceInterface
     }
 
     /**
-     * @return array<string,mixed>
-     * @throws GuzzleInvalidResponseException
-     */
-    protected function validateAndDecodeJSONResponse(ResponseInterface $response): array
-    {
-        $translationAPI = TranslationAPIFacade::getInstance();
-        if ($response->getStatusCode() !== 200) {
-            throw new GuzzleInvalidResponseException(
-                sprintf(
-                    $translationAPI->__('The response status code is \'%s\' instead of the expected \'%s\'', 'guzzle-http'),
-                    $response->getStatusCode(),
-                    200
-                )
-            );
-        }
-        $contentType = $response->getHeaderLine('content-type');
-        // It must be a JSON content type, for which it's either
-        // application/json or one of its opinionated variants,
-        // which all contain +json, such as
-        // application/ld+json or application/geo+json
-        $isJSONContentType =
-            substr($contentType, 0, strlen('application/json')) === 'application/json'
-            || (
-                substr($contentType, 0, strlen('application/')) === 'application/'
-                && str_contains($contentType, '+json')
-            );
-        if (!$isJSONContentType) {
-            throw new GuzzleInvalidResponseException(
-                sprintf(
-                    $translationAPI->__('The response content type \'%s\' is unsupported', 'guzzle-http'),
-                    $contentType
-                )
-            );
-        }
-        $bodyResponse = $response->getBody()->__toString();
-        if (!$bodyResponse) {
-            throw new GuzzleInvalidResponseException(
-                $translationAPI->__('The body of the response is empty', 'guzzle-http')
-            );
-        }
-        return json_decode($bodyResponse, true);
-    }
-
-    /**
      * Execute several JSON requests asynchronously
      *
      * @param RequestInput[] $requestInputs
-     * @return array<string,mixed> The payload if successful
+     * @return ResponseInterface[]
      *
-     * @throws GuzzleInvalidResponseException
+     * @throws GuzzleHTTPRequestException
      */
     public function sendAsyncHTTPRequest(array $requestInputs): array
     {
@@ -131,17 +79,25 @@ class GuzzleService implements GuzzleServiceInterface
             // Wait for the requests to complete, even if some of them fail
             $results = Utils::settle($promises)->wait();
         } catch (Exception $exception) {
-            throw new GuzzleRequestException(
-                $exception->getMessage(),
-                0,
-                $exception
-            );
+            $this->throwException($exception);
         }
 
         // You can access each result using the key provided to the unwrap function.
         return array_map(
-            fn (array $result) => $this->validateAndDecodeJSONResponse($result['value']),
+            fn (array $result) => new ResponseWrapper($result['value']),
             $results
+        );
+    }
+
+    /**
+     * @throws GuzzleHTTPRequestException
+     */
+    protected function throwException(Exception $exception): never
+    {
+        throw new GuzzleHTTPRequestException(
+            $exception->getMessage(),
+            0,
+            $exception
         );
     }
 }
