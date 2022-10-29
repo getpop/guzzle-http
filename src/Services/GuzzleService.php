@@ -92,7 +92,7 @@ class GuzzleService implements GuzzleServiceInterface
     /**
      * @throws GuzzleHTTPRequestException
      */
-    protected function throwException(Exception $exception): void
+    protected function throwException(Exception $exception): never
     {
         throw new GuzzleHTTPRequestException(
             $exception->getMessage(),
