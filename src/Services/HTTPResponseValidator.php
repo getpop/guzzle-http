@@ -68,9 +68,19 @@ class HTTPResponseValidator implements HTTPResponseValidatorInterface
             );
         }
 
-        return json_decode(
+        $decodedJSON = json_decode(
             $bodyResponse,
             $associative
         );
+        if (!is_array($decodedJSON) && !($decodedJSON instanceof stdClass)) {
+            throw new GuzzleHTTPInvalidResponseException(
+                sprintf(
+                    $this->__('The body of the response could not be JSON-decoded: \'%s\'', 'guzzle-http'),
+                    $bodyResponse
+                )
+            );
+        }
+
+        return $decodedJSON;
     }
 }
