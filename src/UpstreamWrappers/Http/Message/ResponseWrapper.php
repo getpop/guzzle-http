@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace PoP\GuzzleHTTP\UpstreamWrappers\Http\Message;
 
 use Psr\Http\Message\ResponseInterface as UpstreamResponseInterface;
