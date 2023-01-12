@@ -223,7 +223,7 @@
     ],
     "require": {
         "php": "^8.1",
-        "getpop/component-model": "^0.9.8",
+        "getpop/component-model": "^0.10",
         "guzzlehttp/guzzle": "^7.4"
     },
     "require-dev": {
