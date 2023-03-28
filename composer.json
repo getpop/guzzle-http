@@ -167,7 +167,7 @@
         "graphql-by-pop-pro/pass-onwards-directive": "<0.10.2",
         "graphql-by-pop-pro/depends-on-operations-directive": "<0.10.2",
         "graphql-by-pop-pro/export-directive": "<0.10.2",
-        "pop-schema-pro/http-requests": "<0.10.2",
+        "pop-schema-pro/send-http-requests": "<0.10.2",
         "pop-schema-pro/default-directive": "<0.10.2",
         "pop-schema-pro/translate-directive": "<0.10.2",
         "pop-schema-pro/google-translate-directive": "<0.10.2",
