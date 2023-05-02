@@ -3,8 +3,6 @@ parameters:
     paths:
         - src
         - tests
-    excludePaths:
-        - src/UpstreamWrappers/Http/Message/ResponseWrapper.php
     ignoreErrors:
         - 
             message: '#Variable \$response might not be defined\.#'
